@@ -39,6 +39,7 @@ def get_args_parser():
     parser.add_argument('--dataset', choices=['s', 'c', 'flowers102', 'f'])
     parser.add_argument('--nb_classes', type=int, help='number of the classification types')
     parser.add_argument('--output_dir', default='./test', help='path where to save, empty for no saving')
+    parser.add_argument('--supervised_mode', default=1, type=int)
 
     # AdaptFormer related parameters
     parser.add_argument('--ffn_adapt', default=False, action='store_true', help='whether activate AdaptFormer')
@@ -180,6 +181,8 @@ def main(args):
         padapt_local=args.padapt_local,
         padapt_scalar=args.padapt_scalar,
         padapt_bottleneck=args.padapt_bottleneck,
+        # other
+        supervised_mode=args.supervised_mode,
     )
 
     if args.model.startswith('vit'):
