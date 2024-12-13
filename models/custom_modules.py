@@ -98,7 +98,12 @@ class Block(nn.Module):
         super().__init__()
         self.config = config
         self.norm1 = norm_layer(dim)
-        self.attn = Attention_supervised_image(dim, num_heads=num_heads, qkv_bias=qkv_bias, attn_drop=attn_drop, proj_drop=drop)
+
+        if self.config.supervised_mode == 1:
+            self.attn = Attention_supervised_image(dim, num_heads=num_heads, qkv_bias=qkv_bias, attn_drop=attn_drop, proj_drop=drop)
+        else:
+            self.attn = Attention(dim, num_heads=num_heads, qkv_bias=qkv_bias, attn_drop=attn_drop, proj_drop=drop)
+
         # NOTE: drop path for stochastic depth, we shall see if this is better than dropout here
         self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()
         self.norm2 = norm_layer(dim)
